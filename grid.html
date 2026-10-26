@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Grid - Aula de CSS</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="grid.css">
+</head>
+<body>
+
+  <header>
+    <h1>Grid - Aula de CSS</h1>
+    <a href="index.html">⬅ Voltar ao Hub</a>
+  </header>
+
+  <main>
+
+    <section>
+      <h2>O que é o Grid?</h2>
+      <p>
+        O CSS Grid é um layout em <strong>duas dimensões</strong>: ele trabalha com <strong>linhas e colunas</strong> ao mesmo tempo.
+        Enquanto o <a href="flexbox.html">Flexbox</a> organiza em uma linha OU uma coluna,
+        o Grid divide o contêiner como se fosse uma tabela, e nós escolhemos em qual célula cada elemento vai ficar.
+      </p>
+      <p>Alguns nomes que vamos usar:</p>
+      <ul>
+        <li><strong>Grid container</strong> — o elemento pai, que recebe <code>display: grid;</code>;</li>
+        <li><strong>Grid items</strong> — os filhos diretos do contêiner;</li>
+        <li><strong>Linhas (rows) e colunas (columns)</strong> — as divisões horizontais e verticais do grid;</li>
+        <li><strong>Célula</strong> — o encontro de uma linha com uma coluna;</li>
+        <li><strong>Gap</strong> — o espaço entre as linhas e as colunas.</li>
+      </ul>
+      <pre><code>.container {
+  display: grid;
+}</code></pre>
+      <p>
+        Só com o <code>display: grid</code> nada muda de verdade, porque o grid começa com uma coluna só e os itens ficam um embaixo do outro.
+        O trabalho está em dizer quantas colunas e linhas queremos. Nos exemplos desta página todos os contêineres têm <code>gap: 10px</code>
+        para as caixas não ficarem coladas (o <code>gap</code> tem uma seção só dele mais para frente).
+      </p>
+    </section>
+
+    <section>
+      <h2>Criando colunas e linhas</h2>
+      <p>
+        Usamos <code>grid-template-columns</code> para criar as colunas, e cada valor é a largura de uma coluna.
+        Já o <code>grid-template-rows</code> faz o mesmo para a altura das linhas.
+      </p>
+
+      <p><strong>grid-template-columns: 100px 100px 100px</strong> — são 3 colunas, e como temos 6 itens o grid criou 2 linhas sozinho.</p>
+      <div class="demo fixas">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+      </div>
+
+      <p><strong>grid-template-rows: 50px 100px</strong> — agora definimos também a altura de cada linha.</p>
+      <div class="demo linhas">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+      </div>
+
+      <pre><code>.container {
+  display: grid;
+  grid-template-columns: 100px 100px 100px;
+  grid-template-rows: 50px 100px;
+}</code></pre>
+      <p>
+        Os itens vão sendo colocados da esquerda para a direita e de cima para baixo, na ordem do HTML,
+        e quando acaba uma linha o grid passa para a próxima.
+      </p>
+    </section>
+
+    <section>
+      <h2>A unidade fr e o repeat()</h2>
+      <p>
+        Usar só <code>px</code> deixa o layout travado. A unidade <code>fr</code> (fração) divide o <strong>espaço livre</strong> do contêiner.
+        Em <code>1fr 2fr 1fr</code> o espaço é dividido em 4 partes: a coluna do meio fica com 2 e as outras duas com 1 cada.
+      </p>
+      <div class="demo fr-1-2-1">
+        <div class="item">1fr</div>
+        <div class="item">2fr</div>
+        <div class="item">1fr</div>
+      </div>
+
+      <p>
+        O <code>repeat()</code> evita escrever o mesmo valor várias vezes.
+        <code>repeat(3, 1fr)</code> é o mesmo que <code>1fr 1fr 1fr</code>:
+      </p>
+      <div class="demo tres-colunas">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+      </div>
+
+      <p>Também dá para misturar valores fixos e <code>fr</code>. Aqui a primeira coluna tem 150px e a segunda ocupa o resto:</p>
+      <div class="demo misto">
+        <div class="item">150px</div>
+        <div class="item">1fr</div>
+      </div>
+
+      <pre><code>.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.outro {
+  grid-template-columns: 150px 1fr;
+}</code></pre>
+    </section>
+
+    <section>
+      <h2>gap</h2>
+      <p>
+        O <code>gap</code> define o espaço entre as linhas e as colunas, sem precisar de <code>margin</code> nos itens.
+      </p>
+      <ul>
+        <li><code>row-gap</code> — espaço entre as linhas;</li>
+        <li><code>column-gap</code> — espaço entre as colunas;</li>
+        <li><code>gap</code> — atalho. Com um valor (<code>gap: 20px;</code>) vale para os dois, com dois valores é linha e depois coluna.</li>
+      </ul>
+      <p>Aqui são <code>10px</code> entre as linhas e <code>40px</code> entre as colunas:</p>
+      <div class="demo com-gap">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+      </div>
+      <pre><code>.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px 40px;
+}</code></pre>
+    </section>
+
+    <section>
+      <h2>Posicionando itens: grid-column e grid-row</h2>
+      <p>
+        As linhas que dividem o grid são <strong>numeradas a partir do 1</strong>.
+        Um grid com 3 colunas tem 4 linhas verticais (1, 2, 3 e 4), e um item pode ocupar várias células
+        dizendo em qual linha ele começa e em qual termina.
+      </p>
+      <p>No exemplo, o <strong>A</strong> (laranja) ocupa duas colunas e o <strong>B</strong> (verde) ocupa duas linhas:</p>
+      <div class="demo posicionando">
+        <div class="item item-a">A</div>
+        <div class="item item-b">B</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+        <div class="item">7</div>
+      </div>
+      <pre><code>.item-a {
+  grid-column: 1 / 3;   /* da linha 1 até a linha 3 = 2 colunas */
+}
+
+.item-b {
+  grid-column: 3;
+  grid-row: 1 / 3;      /* da linha 1 até a linha 3 = 2 linhas */
+}</code></pre>
+      <p>
+        Outra forma é o <code>span</code>: <code>grid-column: span 2;</code> quer dizer "ocupe 2 colunas a partir de onde você estiver".
+        E se usarmos <code>grid-column: 1 / -1;</code>, o item ocupa todas as colunas, porque o <code>-1</code> é a última linha.
+      </p>
+    </section>
+
+    <section>
+      <h2>grid-template-areas</h2>
+      <p>
+        Outra forma de montar o layout é <strong>dar nome para as regiões</strong>.
+        Cada item recebe um nome com <code>grid-area</code> e o contêiner desenha o layout com <code>grid-template-areas</code>,
+        como se fosse um desenho feito com texto. É muito usado para a estrutura de uma página.
+      </p>
+      <div class="demo pagina">
+        <div class="item topo">topo</div>
+        <div class="item menu">menu</div>
+        <div class="item conteudo">conteúdo</div>
+        <div class="item rodape">rodapé</div>
+      </div>
+      <pre><code>.pagina {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  grid-template-rows: 50px 120px 50px;
+  grid-template-areas:
+    "topo topo"
+    "menu conteudo"
+    "rodape rodape";
+}
+
+.topo     { grid-area: topo; }
+.menu     { grid-area: menu; }
+.conteudo { grid-area: conteudo; }
+.rodape   { grid-area: rodape; }</code></pre>
+      <p>
+        Cada linha de texto é uma linha do grid, e repetir o nome faz a região ocupar várias colunas
+        (aqui o <code>topo</code> e o <code>rodape</code> ocupam as duas).
+        A vantagem é que, para mudar o layout no celular, basta reescrever o desenho dentro de um <code>@media</code>.
+      </p>
+    </section>
+
+    <section>
+      <h2>Alinhamento no Grid</h2>
+      <p>
+        No Grid o alinhamento também tem duas direções, mas aqui existe uma diferença importante:
+        algumas propriedades alinham o <strong>item dentro da sua célula</strong> e outras alinham o <strong>grid dentro do contêiner</strong>.
+      </p>
+      <ul>
+        <li><code>justify-items</code> — alinha os itens na horizontal, dentro da célula;</li>
+        <li><code>align-items</code> — alinha os itens na vertical, dentro da célula;</li>
+        <li><code>place-items</code> — atalho dos dois (<code>place-items: center;</code> centraliza);</li>
+        <li><code>justify-content</code> e <code>align-content</code> — alinham o grid inteiro quando ele é menor que o contêiner.</li>
+      </ul>
+
+      <p><strong>place-items: center</strong></p>
+      <div class="demo alinhar centro">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+      </div>
+
+      <p><strong>justify-items: end</strong> e <strong>align-items: end</strong></p>
+      <div class="demo alinhar canto">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+      </div>
+
+      <p><strong>justify-content: space-between</strong> (colunas de 100px dentro de um contêiner maior)</p>
+      <div class="demo alinhar-grid">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+      </div>
+
+      <pre><code>.container {
+  display: grid;
+  place-items: center;
+}</code></pre>
+      <p>
+        Para mexer em um item só, existem o <code>justify-self</code> e o <code>align-self</code>.
+      </p>
+    </section>
+
+    <section>
+      <h2>Grid responsivo com auto-fit e minmax()</h2>
+      <p>
+        Dá para criar um grid que se ajusta sozinho ao tamanho da tela, sem precisar de <code>@media</code>.
+        Para isso juntamos o <code>repeat()</code> com <code>auto-fit</code> e o <code>minmax()</code>:
+      </p>
+      <pre><code>.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}</code></pre>
+      <ul>
+        <li><code>minmax(200px, 1fr)</code> — cada coluna tem no mínimo 200px e no máximo 1fr;</li>
+        <li><code>auto-fit</code> — cria quantas colunas couberem na largura disponível.</li>
+      </ul>
+      <p>Diminua a janela do navegador e veja o número de colunas mudando:</p>
+      <div class="demo auto">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+      </div>
+      <p>
+        O próprio <a href="index.html">Hub</a> usa isso: no <code>index.css</code> os cards ficam dentro de um
+        <code>main</code> com <code>repeat(auto-fit, minmax(350px, 1fr))</code>.
+      </p>
+    </section>
+
+    <section>
+      <h2>Grid ou Flexbox?</h2>
+      <p>Os dois resolvem problemas diferentes, e dá para usar os dois juntos.</p>
+      <div class="comparacao">
+        <div>
+          <h3>Flexbox</h3>
+          <p>Uma dimensão: linha <strong>ou</strong> coluna.</p>
+          <p>O conteúdo dos itens é que define o tamanho.</p>
+          <p>Bom para menus, botões lado a lado e alinhar coisas dentro de um componente.</p>
+        </div>
+        <div>
+          <h3>Grid</h3>
+          <p>Duas dimensões: linhas <strong>e</strong> colunas.</p>
+          <p>Primeiro desenhamos o layout, depois colocamos os itens nele.</p>
+          <p>Bom para a estrutura da página, galerias e qualquer coisa que precise alinhar em linhas e colunas.</p>
+        </div>
+      </div>
+      <p>
+        Um jeito comum de usar: Grid para a estrutura geral da página e Flexbox dentro de cada bloco (por exemplo, o menu dentro do topo).
+      </p>
+    </section>
+
+    <section>
+      <h2>Atividade Prática</h2>
+      <p>Crie uma página que contenha:</p>
+      <ul>
+        <li>Um grid de 3 colunas iguais com <code>repeat(3, 1fr)</code> e 6 caixas dentro;</li>
+        <li>Uma das caixas ocupando 2 colunas com <code>grid-column: span 2;</code>;</li>
+        <li>Um layout de página com topo, menu, conteúdo e rodapé usando <code>grid-template-areas</code>;</li>
+        <li>Uma galeria com <code>repeat(auto-fit, minmax(200px, 1fr))</code>, que muda o número de colunas ao diminuir a janela.</li>
+      </ul>
+      <p>
+        Depois compare com o que foi feito no Flexbox e pense em qual dos dois foi mais prático para cada situação.
+      </p>
+      <p> <a href="https://cssgridgarden.com/">Clique aqui para treinar na fazendinha 🥕</a> </p>
+    </section>
+
+    <section class="teste-css">
+      <h2> Área de Testes</h2>
+      <p>Altere as propriedades de <strong>.teste-container</strong> no arquivo <strong>grid.css</strong> (como <code>grid-template-columns</code>, <code>gap</code> e <code>place-items</code>) e coloque <code>grid-column</code> ou <code>grid-row</code> nas caixas para ver como o CSS afeta cada elemento.</p>
+
+      <div class="teste-container">
+        <div class="caixa caixa1">.caixa1</div>
+        <div class="caixa caixa2">.caixa2</div>
+        <div class="caixa caixa3">.caixa3</div>
+      </div>
+    </section>
+
+  </main>
+
+   <footer>
+    <p>Desenvolvido por PEDRO AUGUSTO WINSKI</p>
+  </footer>
+
+</body>
+</html>
